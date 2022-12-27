@@ -7,7 +7,7 @@ jobs:
     name: Lint code base
     runs-on: windows-latest
     steps:
-      -nmae: Checkout code
+      -name: Checkout code
        uses: actions/checkout@v2
     
       -name: Run Super-Linter

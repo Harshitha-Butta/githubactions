@@ -27,11 +27,12 @@ jobs:
       - name: Set build number
         id: get_version
         run: |
+          echo ${{github.event.inputs.version}}
           $version= "21.10.0.81"
           echo "build_number=$version"    
         shell: powershell
     outputs:
-          env.build_number: $version 
+          version1: $version
   deploy:
     runs-on: windows-latest
     needs: mainbuild

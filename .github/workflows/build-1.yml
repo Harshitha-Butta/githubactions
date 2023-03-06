@@ -6,8 +6,9 @@ on:
         description: 'new build version'
         required: false
         default: 'true'
+        
 env:
-DoRunTests:${{github.event.inputs.runTests}}
+  DoRunTests: ${{ github.event.inputs.runTests }}
 
 jobs:
   mainbuild:

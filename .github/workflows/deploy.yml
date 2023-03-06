@@ -16,12 +16,19 @@ on:
         default: 'true'
 jobs:
   deploy:
-    needs: mainbuild
     runs-on: ubuntu-latest
-    inputs:
-      version1: ${{ needs.mainbuild.outputs.version1 }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use custom action
+        uses: ./.github/actions/my-custom-action
+        with:
+          version: ${{ github.event.inputs.version }}
+
       - name: Deploy the app
         run: |
           echo "Deploying version: ${{ inputs.version1 }}"
           # add deployment steps here
+
+      

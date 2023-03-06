@@ -27,7 +27,7 @@ jobs:
       - id: get_version
         run: |
           echo ${{github.event.inputs.version}}
-          echo 'version= 21.10.0.81" >> "$GITHUB_OUTPUT"
+          echo "version= 21.10.0.81" >> "$GITHUB_OUTPUT"
     outputs:
       version1: ${{steps.get_version.outputs.version}}
   deploy:

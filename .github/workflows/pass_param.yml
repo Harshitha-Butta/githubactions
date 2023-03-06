@@ -6,6 +6,15 @@ on:
         description: 'new build version'
         required: false
         default: '99.99.99.99'
+      sanityTest:
+        description: 'Run Sanity checks'
+        required: false
+        default: 'true'
+      regressionTest:
+        description: 'Run Regression test suite'
+        required: false
+        default: 'true'
+      
 jobs:
   job1:
       runs-on: ubuntu-latest

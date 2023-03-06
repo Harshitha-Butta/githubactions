@@ -1,4 +1,4 @@
-name: Trigger Jenkins pipeline
+name: Set build version number
 on:
   workflow_dispatch: # manual trigger
     inputs:

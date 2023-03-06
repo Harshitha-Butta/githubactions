@@ -1,0 +1,28 @@
+name: Trigger Jenkins pipeline
+on:
+  workflow_dispatch: # manual trigger
+    inputs:
+      runTests:
+        description: 'new build version'
+        required: false
+        default: 'true'
+env:
+DoRunTests:${{github.event.inputs.runTests}}
+
+jobs:
+  mainbuild:
+      runs-on: windows-latest
+      outputs:
+        version1: ${{ env.version }}
+      steps:
+        - name: Run Tests
+          run: |
+            echo "${{ env.DoRunTests }}"
+        - name: Set build number
+          run: |
+            $version= "21.10.0.81"
+            echo "::set-output name=version1::$version"
+        - name: Trigger deploy workflow
+          uses: ./.github/workflows/deploy.yml
+          with:
+            version1: ${{ needs.mainbuild.outputs.version1 }}

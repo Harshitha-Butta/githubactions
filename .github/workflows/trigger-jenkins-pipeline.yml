@@ -29,10 +29,10 @@ jobs:
         run: |
           echo ${{github.event.inputs.version}}
           $version= "21.10.0.81"
-          echo "test=$version" >>  "$GITHUB_OUTPUT"
+          echo "version=21.10.0.81" >>  "$GITHUB_OUTPUT"
         shell: powershell
     outputs:
-          version1: ${{steps.get_version.outputs.test}}
+          version1: ${{steps.get_version.outputs.version}}
   deploy:
     runs-on: windows-latest
     needs: mainbuild

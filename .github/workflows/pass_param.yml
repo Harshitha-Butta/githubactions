@@ -1,3 +1,11 @@
+name: Trigger Jenkins-pipeline
+on:
+  workflow_dispatch: # manual trigger
+    inputs:
+      version:
+        description: 'new build version'
+        required: false
+        default: '99.99.99.99'
 jobs:
   job1:
     runs-on: ubuntu-latest

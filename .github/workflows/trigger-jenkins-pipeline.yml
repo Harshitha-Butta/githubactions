@@ -24,16 +24,15 @@ env:
 jobs:
   mainbuild:
     runs-on: windows-latest
-    outputs:
-          version1: ${{ env.build_number }}
     steps:
       - name: Set build number
         id: get_version
         run: |
           $version= "21.10.0.81"
-          echo "build_number=$version"
-          
+          echo "build_number=$version"    
         shell: powershell
+    outputs:
+          version1: ${{ env.build_number }}
   firstbuild:
     runs-on: windows-latest
     steps:

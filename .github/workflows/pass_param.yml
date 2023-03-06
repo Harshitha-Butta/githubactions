@@ -36,4 +36,4 @@ jobs:
       - name : Get Version 
         env:
           Version: ${{needs.job1.outputs.build_number}}
-        run: echo "$Version "
+        run: echo "$Version ${{DoSanityTests}}"

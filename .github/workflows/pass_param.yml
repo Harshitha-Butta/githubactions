@@ -16,7 +16,6 @@ on:
         default: 'true'
    
 env:
-  Version: ${{needs.job1.outputs.build_number}}
   DoSanityTests: ${{ github.event.inputs.sanityTest }}
   DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
   
@@ -37,4 +36,6 @@ jobs:
     needs: job1
     steps:
       - name : Get Version 
+        env:
+          Version: ${{needs.job1.outputs.build_number}}
         run: echo "${{env.Version}} ${{env.DoSanityTests}} ${{env.DoRegressionTests}}"

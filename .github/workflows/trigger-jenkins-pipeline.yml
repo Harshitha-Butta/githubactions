@@ -32,12 +32,6 @@ jobs:
         shell: powershell
     outputs:
           env.build_number: $version 
-  firstbuild:
-    runs-on: windows-latest
-    steps:
-      - name: echo value
-        run: |
-          echo "run this job"
   deploy:
     runs-on: windows-latest
     needs: mainbuild
@@ -53,7 +47,7 @@ jobs:
       - name: trigger pipeline
         run:  |
           curl -X POST \
-          -u Harshitha:11d6f79a4caecf7b8f664c10d7465d6c1c \
+          -user Harshitha:11d6f79a4caecf7b8f664c10d7465d6c1c \
           -H "Content-Type: application/json" \
           -d '{"parameter": [{"name":"version", "value":${{ env.build_number }} }, {"name":"sanitytest", "value":${{ env.DoSanityTests }} }], {"name":"regressiontest", "value":${{ env.DoRegressionTests  }} }]}' \
           "http://localhost:8080/job/CFC-Build-Deployment/job/Dev/job/build_deploy/build"

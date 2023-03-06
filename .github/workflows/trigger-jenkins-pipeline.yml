@@ -29,7 +29,6 @@ jobs:
       - name: Set build number
         id: get_version
         run: |
-          $version = "99.9.9.0000"
           echo "build_number=$version"
         shell: powershell
   firstbuild:

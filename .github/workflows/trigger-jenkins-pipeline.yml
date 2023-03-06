@@ -29,18 +29,21 @@ jobs:
         run: |
           echo ${{github.event.inputs.version}}
           $version= "21.10.0.81"
-          echo "build_number=$version"    
+          echo "test=$version" >>  "$GITHUB_OUTPUT"
         shell: powershell
     outputs:
-          version1: $version
+          version1: ${{steps.get_version.outputs.test}}
   deploy:
     runs-on: windows-latest
     needs: mainbuild
     steps:
       - name: Get build number from Research/QA workflow
+      - env:
+          test1: ${{needs.mainbuild.outputs.version1}}
         run: |
           $x=${{needs.mainbuild.outputs.version1}}
           echo "${{env.build_number}}"
+          ech0 "$test1"
           echo "${{needs.mainbuild.outputs.version1}}"
           echo "The build number is ${{ needs.mainbuild.outputs.version1}}"
           echo "Version=${{needs.mainbuild.outputs.version1}}"

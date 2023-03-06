@@ -1,4 +1,4 @@
-name: Trigger Jenkins-pipeline
+name: Trigger Jenkins
 on:
   workflow_dispatch: # manual trigger
     inputs:

@@ -3,18 +3,23 @@ on:
   workflow_dispatch: # manual trigger
     inputs:
       runTests:
-        description: 'new build version'
+        description: 'run tests'
         required: false
         default: 'true'
+      version:
+        description: 'new build version'
+        required: false
+        default: '99.99.99.99'
         
 env:
   DoRunTests: ${{ github.event.inputs.runTests }}
+  Version: ${{ github.event.inputs.version }}
 
 jobs:
   mainbuild:
       runs-on: windows-latest
       outputs:
-        version1: ${{ env.version }}
+        version1: ${{ env.Version }}
       steps:
         - name: Checkout repository
           uses: actions/checkout@v3

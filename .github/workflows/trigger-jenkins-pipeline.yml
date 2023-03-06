@@ -37,12 +37,10 @@ jobs:
     needs: mainbuild
     steps:
       - name: Get build number from Research/QA workflow
-      - env:
-          test1: ${{needs.mainbuild.outputs.version1}}
         run: |
           $x=${{needs.mainbuild.outputs.version1}}
           echo "${{env.build_number}}"
-          ech0 "$test1"
+          ${{needs.mainbuild.outputs.version1}}
           echo "${{needs.mainbuild.outputs.version1}}"
           echo "The build number is ${{ needs.mainbuild.outputs.version1}}"
           echo "Version=${{needs.mainbuild.outputs.version1}}"

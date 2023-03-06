@@ -1,0 +1,56 @@
+name: Trigger pipeline in Jenkins Server
+on:
+  workflow_dispatch: # manual trigger
+    inputs:
+      version:
+        description: 'new build version'
+        required: false
+        default: '99.99.99.99'
+      sanityTest:
+        description: 'Run Sanity checks'
+        required: false
+        default: 'true'
+      regressionTest:
+        description: 'Run Regression test suite'
+        required: false
+        default: 'true'
+
+env:
+  Version: ''
+  DoSanityTests: ${{ github.event.inputs.sanityTest }}
+  DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
+
+jobs:
+  mainbuild:
+    runs-on: windows-latest
+    steps:
+      - name: Set build number
+      - id: get_version
+        run: |
+          echo ${{github.event.inputs.version}}
+          $version= "21.10.0.81"
+        shell: powershell
+    outputs:
+          version1: ${{steps.get_version.outputs.version}}
+  deploy:
+    runs-on: windows-latest
+    needs: mainbuild
+    steps:
+      - name: Get build number from Research/QA workflow
+      - env:
+          test1: ${{needs.mainbuild.outputs.version1}}
+        run: |
+          $x=${{needs.mainbuild.outputs.version1}}
+          echo "${{env.build_number}}"
+          ech0 "$test1"
+          echo "${{needs.mainbuild.outputs.version1}}"
+          echo "The build number is ${{ needs.mainbuild.outputs.version1}}"
+          echo "Version=${{needs.mainbuild.outputs.version1}}"
+          echo "Version"
+      - name: trigger pipeline
+        run:  |
+          curl -X POST \
+          -user Harshitha:11d6f79a4caecf7b8f664c10d7465d6c1c \
+          -H "Content-Type: application/json" \
+          -d '{"parameter": [{"name":"version", "value":${{ env.build_number }} }, {"name":"sanitytest", "value":${{ env.DoSanityTests }} }], {"name":"regressiontest", "value":${{ env.DoRegressionTests  }} }]}' \
+          "http://localhost:8080/job/CFC-Build-Deployment/job/Dev/job/build_deploy/build"

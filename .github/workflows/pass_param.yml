@@ -31,8 +31,9 @@ jobs:
           id: step1
           run: |
             $version = "21.10.0.81"
-            echo "build_number=$version" >> "$GITHUB_ENV"
+            echo "build_number=version" >> "$GITHUB_ENV"
             echo "${{ github.event.inputs.version }}"
+            echo "version1=build_number"
             echo "version1=${{env.build_number}}" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: windows-latest

@@ -21,18 +21,39 @@ env:
   DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
 
 jobs:
+  mainbuild:
+    runs-on: windows-latest
+    outputs:
+          build_number: ${{ env.build_number }}
+    steps:
+      - name: Set build number
+        id: get_version
+        run: |
+          $version= "21.10.0.81"
+          build_number=$version
+          
+        shell: powershell
+  firstbuild:
+    runs-on: windows-latest
+    steps:
+      - name: echo value
+        run: |
+          echo "run this job"
   deploy:
-    runs-on: ubuntu-latest
-    needs: research-build
+    runs-on: windows-latest
+    needs: mainbuild
     steps:
       - name: Get build number from Research/QA workflow
         run: |
-          echo "The build number is ${{ needs.mainbuild.outputs.version}}"
-          echo "build_number=${{needs.mainbuild.outputs.version}}"
+          $x=${{needs.mainbuild.outputs.build_number}}
+          echo "x"
+          echo "env.build_number"
+          echo "The build number is ${{ needs.mainbuild.outputs.build_number}}"
+          echo "build_number=${{needs.mainbuild.outputs.build_number}}"
       - name: trigger pipeline
         run:  |
           curl -X POST \
-          -u jenkinsUser:11fc28771d771bcc22a15cb8014d07d677 \
+          -u Harshitha:11d6f79a4caecf7b8f664c10d7465d6c1c \
           -H "Content-Type: application/json" \
           -d '{"parameter": [{"name":"version", "value":${{ env.build_number }} }, {"name":"sanitytest", "value":${{ env.DoSanityTests }} }], {"name":"regressiontest", "value":${{ env.DoRegressionTests  }} }]}' \
           "http://localhost:8080/job/build_deploy/build"

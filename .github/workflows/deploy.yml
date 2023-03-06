@@ -1,0 +1,27 @@
+name: Trigger  pipeline
+on:
+  workflow_dispatch: # manual trigger
+    inputs:
+      version:
+        description: 'new build version'
+        required: false
+        default: '99.99.99.99'
+      sanityTest:
+        description: 'Run Sanity checks'
+        required: false
+        default: 'true'
+      regressionTest:
+        description: 'Run Regression test suite'
+        required: false
+        default: 'true'
+jobs:
+  deploy:
+    needs: mainbuild
+    runs-on: ubuntu-latest
+    inputs:
+      version1: ${{ needs.mainbuild.outputs.version1 }}
+    steps:
+      - name: Deploy the app
+        run: |
+          echo "Deploying version: ${{ inputs.version1 }}"
+          # add deployment steps here

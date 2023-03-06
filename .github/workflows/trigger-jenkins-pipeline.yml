@@ -29,6 +29,7 @@ jobs:
       - name: Set build number
         id: get_version
         run: |
+          $version= "21.10.0.81"
           echo "build_number=$version"
         shell: powershell
   firstbuild:
@@ -48,7 +49,7 @@ jobs:
       - name: trigger pipeline
         run:  |
           curl -X POST \
-          -u jenkinsUser:11fc28771d771bcc22a15cb8014d07d677 \
+          -u Harshitha:11d6f79a4caecf7b8f664c10d7465d6c1c \
           -H "Content-Type: application/json" \
           -d '{"parameter": [{"name":"version", "value":${{ env.build_number }} }, {"name":"sanitytest", "value":${{ env.DoSanityTests }} }], {"name":"regressiontest", "value":${{ env.DoRegressionTests  }} }]}' \
           "http://localhost:8080/job/CFC-Build-Deployment/job/Dev/job/build_deploy/build"

@@ -16,6 +16,12 @@ jobs:
       outputs:
         version1: ${{ env.version }}
       steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+          with:
+            lfs: true
+            fetch-depth: 0  # needed for gitversion to have available tags on all relevant branches
+            ref: ${{ github.ref }}
         - name: Run Tests
           run: |
             echo "${{ env.DoRunTests }}"

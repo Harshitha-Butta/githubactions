@@ -22,6 +22,14 @@ jobs:
     outputs:
       version1: ${{ env.Version }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use custom action
+        uses: ./.github/actions/my-custom-action
+        with:
+          version: ${{ github.event.inputs.version }}
+          
       - name: Run Tests
         run: |
           echo "${{ env.DoRunTests }}"

@@ -31,7 +31,7 @@ jobs:
           run: |
             $version = "21.10.0.81"
             echo "${{ github.event.inputs.version }}"
-            echo "version1=$version" >> "$GITHUB_OUTPUT"
+            echo "version1=${{version}}" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest
     needs: job1

@@ -31,7 +31,7 @@ jobs:
           echo "build_number=$version"    
         shell: powershell
     outputs:
-          version1: ${{ env.build_number }}
+          env.build_number: $version 
   firstbuild:
     runs-on: windows-latest
     steps:

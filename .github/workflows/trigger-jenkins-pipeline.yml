@@ -24,19 +24,18 @@ jobs:
   mainbuild:
     runs-on: windows-latest
     steps:
-      - name: Set build number
-        id: get_version
+      - id: get_version
         run: |
           echo ${{github.event.inputs.version}}
-          $version= "21.10.0.81"
-        shell: powershell
+          echo 'version= 21.10.0.81" >> "$GITHUB_OUTPUT"
     outputs:
-          version1: ${{steps.get_version.outputs.version}}
+      version1: ${{steps.get_version.outputs.version}}
   deploy:
     runs-on: windows-latest
     needs: mainbuild
     steps:
-      - name: Get build number from Research/QA workflow
+      - env:
+          version2: ${{needs.mainbuild.outputs.version1}}
         run: |
           $x=${{needs.mainbuild.outputs.version1}}
           echo "${{env.build_number}}"
@@ -44,7 +43,7 @@ jobs:
           echo "${{needs.mainbuild.outputs.version1}}"
           echo "The build number is ${{ needs.mainbuild.outputs.version1}}"
           echo "Version=${{needs.mainbuild.outputs.version1}}"
-          echo "Version"
+          echo "$version2"
       - name: trigger pipeline
         run:  |
           curl -X POST \

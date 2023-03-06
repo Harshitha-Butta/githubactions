@@ -16,6 +16,7 @@ on:
         default: 'true'
    
 env:
+  build_number: '99.9.9.9999'
   DoSanityTests: ${{ github.event.inputs.sanityTest }}
   DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
   
@@ -30,8 +31,9 @@ jobs:
           id: step1
           run: |
             $version = "21.10.0.81"
+            echo "build_number=$version"
             echo "${{ github.event.inputs.version }}"
-            echo "version1=${{version}}" >> "$GITHUB_OUTPUT"
+            echo "version1=${{env.build_number}}" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest
     needs: job1

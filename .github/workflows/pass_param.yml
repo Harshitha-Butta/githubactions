@@ -14,7 +14,11 @@ on:
         description: 'Run Regression test suite'
         required: false
         default: 'true'
-      
+   
+env:
+  DoSanityTests: ${{ github.event.inputs.sanityTest }}
+  DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
+  
 jobs:
   job1:
       runs-on: ubuntu-latest

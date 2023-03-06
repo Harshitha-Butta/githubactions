@@ -17,7 +17,6 @@ on:
 
 env:
   Version: ''
-  build_number: ${{ github.event.inputs.version }}
   DoSanityTests: ${{ github.event.inputs.sanityTest }}
   DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
 

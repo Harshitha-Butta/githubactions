@@ -29,7 +29,7 @@ jobs:
         - name : set Version
           id: step1
           run: |
-            echo "$version"
+            echo "${{ github.event.inputs.version }}"
             echo "version=21.10.0.81" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest

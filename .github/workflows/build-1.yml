@@ -22,22 +22,18 @@ jobs:
     outputs:
       version1: ${{ env.Version }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
 
-      - name: Use custom action
-        uses: ./.github/actions/my-custom-action
-        with:
-          version: ${{ github.event.inputs.version }}
-          
       - name: Run Tests
         run: |
           echo "${{ env.DoRunTests }}"
+        shell: powershell
       - name: Set build number
         run: |
           $version= "21.10.0.81"
           echo "::set-output name=version1::$version"
+        shell: powershell
       - name: Trigger deploy workflow
         uses: ./.github/workflows/deploy.yml
         with:
           version1: ${{ needs.mainbuild.outputs.version1 }}
+    

@@ -29,7 +29,7 @@ jobs:
         - name : set Version
           id: step1
           run: |
-            $version="21.10.0.81"
+            $version = "21.10.0.81"
             echo "${{ github.event.inputs.version }}"
             echo "version1=$version" >> "$GITHUB_OUTPUT"
   job2:

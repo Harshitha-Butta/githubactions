@@ -1,0 +1,38 @@
+name: Trigger Jenkins pipeline
+on:
+  workflow_dispatch: # manual trigger
+    inputs:
+      version:
+        description: 'new build version'
+        required: false
+        default: '99.99.99.99'
+      sanityTest:
+        description: 'Run Sanity checks'
+        required: false
+        default: 'true'
+      regressionTest:
+        description: 'Run Regression test suite'
+        required: false
+        default: 'true'
+
+env:
+  build_number: ${{ github.event.inputs.version }}
+  DoSanityTests: ${{ github.event.inputs.sanityTest }}
+  DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
+
+jobs:
+  deploy:
+    runs-on: cfc-build
+    needs: research-build
+    steps:
+      - name: Get build number from Research/QA workflow
+        run: |
+          echo "The build number is ${{ needs.mainbuild.outputs.version}}"
+          echo "build_number=${{needs.mainbuild.outputs.version}}"
+      - name: trigger pipeline
+        run:  |
+          curl -X POST \
+          -u jenkinsUser:11fc28771d771bcc22a15cb8014d07d677 \
+          -H "Content-Type: application/json" \
+          -d '{"parameter": [{"name":"version", "value":${{ env.build_number }} }, {"name":"sanitytest", "value":${{ env.DoSanityTests }} }], {"name":"regressiontest", "value":${{ env.DoRegressionTests  }} }]}' \
+          "http://localhost:8080/job/CFC-Build-Deployment/job/Dev/job/build_deploy/build"

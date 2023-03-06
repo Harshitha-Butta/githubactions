@@ -16,6 +16,7 @@ on:
         default: 'true'
 
 env:
+  Version: ''
   build_number: ${{ github.event.inputs.version }}
   DoSanityTests: ${{ github.event.inputs.sanityTest }}
   DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
@@ -24,13 +25,13 @@ jobs:
   mainbuild:
     runs-on: windows-latest
     outputs:
-          build_number: ${{ env.build_number }}
+          version1: ${{ env.build_number }}
     steps:
       - name: Set build number
         id: get_version
         run: |
           $version= "21.10.0.81"
-          build_number=$version
+          echo "build_number=$version"
           
         shell: powershell
   firstbuild:
@@ -45,11 +46,12 @@ jobs:
     steps:
       - name: Get build number from Research/QA workflow
         run: |
-          $x=${{needs.mainbuild.outputs.build_number}}
+          $x=${{needs.mainbuild.outputs.version1}}
           echo "x"
-          echo "env.build_number"
-          echo "The build number is ${{ needs.mainbuild.outputs.build_number}}"
-          echo "build_number=${{needs.mainbuild.outputs.build_number}}"
+          echo "${{needs.mainbuild.outputs.version1}}"
+          echo "The build number is ${{ needs.mainbuild.outputs.version1}}"
+          echo "Version=${{needs.mainbuild.outputs.version1}}"
+          echo "Version"
       - name: trigger pipeline
         run:  |
           curl -X POST \

@@ -30,7 +30,7 @@ jobs:
         id: get_version
         run: |
           $version= "21.10.0.81"
-          echo "build-number=$version"
+          build-number=$version
           
         shell: powershell
   firstbuild:
@@ -46,7 +46,8 @@ jobs:
       - name: Get build number from Research/QA workflow
         run: |
           $x=${{needs.mainbuild.outputs.build_number}}
-          echo "$x"
+          echo "x"
+          echo "env.build_number"
           echo "The build number is ${{ needs.mainbuild.outputs.build_number}}"
           echo "build_number=${{needs.mainbuild.outputs.build_number}}"
       - name: trigger pipeline

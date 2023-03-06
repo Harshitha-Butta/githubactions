@@ -24,13 +24,14 @@ jobs:
       runs-on: ubuntu-latest
       # Map a step output to a job output
       outputs:
-        build_number: ${{ steps.step1.outputs.version }}
+        build_number: ${{ steps.step1.outputs.version1 }}
       steps:
         - name : set Version
           id: step1
           run: |
+            $version="21.10.0.81"
             echo "${{ github.event.inputs.version }}"
-            echo "version=21.10.0.81" >> "$GITHUB_OUTPUT"
+            echo "version1=$version" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest
     needs: job1

@@ -21,6 +21,12 @@ env:
   DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
 
 jobs:
+  firstbuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo value
+        run: |
+          echo "run this job"
   deploy:
     runs-on: ubuntu-latest
     needs: research-build

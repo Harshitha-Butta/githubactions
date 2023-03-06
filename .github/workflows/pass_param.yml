@@ -1,4 +1,4 @@
-name: Triggering Jenkins Pipeline
+name: Trigger Jenkins
 on:
   workflow_dispatch: # manual trigger
     inputs:
@@ -6,14 +6,6 @@ on:
         description: 'new build version'
         required: false
         default: '99.99.99.99'
-      sanityTest:
-        description: 'Run Sanity checks'
-        required: false
-        default: 'true'
-      regressionTest:
-        description: 'Run Regression test suite'
-        required: false
-        default: 'true'
 jobs:
   job1:
       runs-on: ubuntu-latest
@@ -22,13 +14,13 @@ jobs:
         build_number: ${{ steps.step1.outputs.version }}
       steps:
         - name : set Version
-        - id: step1
+          id: step1
           run: echo "version=21.10.0.81" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest
     needs: job1
     steps:
       - name : Get Version 
-      - env:
+        env:
           Version: ${{needs.job1.outputs.build_number}}
         run: echo "$Version "

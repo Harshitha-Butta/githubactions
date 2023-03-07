@@ -30,7 +30,7 @@ jobs:
         - name : set Version
           id: step1
           run: |
-            echo "version=${{build_number}}" >> "$GITHUB_OUTPUT"
+            echo "version=${{env.build_number}}" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: ubuntu-latest
     needs: job1

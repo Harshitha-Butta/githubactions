@@ -41,9 +41,4 @@ jobs:
         run: echo "${{env.Version}} ${{env.DoSanityTests}} ${{env.DoRegressionTests}}"
       - name: trigger pipeline
         run:  |
-          curl -X POST \
-          -u jenkinsUser:11fc28771d771bcc22a15cb8014d07d677 \
-          -H "Content-Type: application/json" \
-          -d '{"parameter": [{"name":"version", "value":${{ env.build_number }} }, {"name":"sanitytest", "value":${{ env.DoSanityTests }} }], {"name":"run_regression", "value":${{ env.DoRegressionTests  }} }]}' \
-          "http://153.78.126.84:8080/job/CFC-Build-Deployment/job/Dev/job/build_deploy/build"
-
+          curl -X POST http://localhost:8080/job/trigger-job/build?token=123456

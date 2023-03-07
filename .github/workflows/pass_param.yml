@@ -41,4 +41,4 @@ jobs:
         run: echo "${{env.Version}} ${{env.DoSanityTests}} ${{env.DoRegressionTests}}"
       - name: trigger pipeline
         run:  |
-          curl -X POST http://localhost:8080/job/trigger-job/build?token=123456
+          curl -u Harshitha:123456 http://127.0.0.1:8080/job/Trigger_Remote_Demo/build

@@ -41,4 +41,4 @@ jobs:
         run: echo "${{env.Version}} ${{env.DoSanityTests}} ${{env.DoRegressionTests}}"
       - name: trigger pipeline
         run:  |
-          curl -u Harshitha:123456 http://127.0.0.1:8080/job/Trigger_Remote_Demo/build
+          curl -u JenkinsUser:123456 http://153.78.126.84:8080/job/CFC-Build-Deployment/job/Dev/job/1/build

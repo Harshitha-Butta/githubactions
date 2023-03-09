@@ -30,6 +30,8 @@ jobs:
         - name : set Version
           id: step1
           run: |
+            $version = "99.0.0.0"
+            echo "build_number=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
             echo "version=${{env.build_number}}" >> "$GITHUB_OUTPUT"
   job2:
     runs-on: windows-latest

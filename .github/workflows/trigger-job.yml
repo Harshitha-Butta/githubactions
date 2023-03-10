@@ -1,0 +1,37 @@
+name: Triggering Jenkins Job
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'new build version'
+        required: false
+        default: '99.99.99.99'
+      sanityTest:
+        description: 'Run Sanity checks'
+        required: false
+        default: 'true'
+      regressionTest:
+        description: 'Run Regression test suite'
+        required: false
+        default: 'true'
+   
+env:
+  build_number: '99.9.9.9999'
+  DoSanityTests: ${{ github.event.inputs.sanityTest }}
+  DoRegressionTests: ${{ github.event.inputs.regressionTest }} 
+  
+jobs:
+  job1:
+      runs-on: windows-latest
+      steps:
+      - name : Get Version 
+        env:
+          Version: ${{needs.job1.outputs.number}}
+        run: echo "${{env.Version}} ${{env.DoSanityTests}} ${{env.DoRegressionTests}} ${{env.build_number}}"
+      - name: Trigger Jenkins job
+        run: |
+          curl -X POST https://cfcjenkinshyd.swenglabs.ncr.com/job/CFC-Build-Deployment/job/Dev/job/1/buildWithParameters \
+          --user jenkinsuser:11fc28771d771bcc22a15cb8014d07d677 \
+          --data-urlencode "version=123" \
+            --data-urlencode "sanityTest=false" \
+            --data-urlencode "regressionTest=true"

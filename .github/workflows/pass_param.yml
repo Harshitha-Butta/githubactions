@@ -44,4 +44,4 @@ jobs:
         run: echo "${{env.Version}} ${{env.DoSanityTests}} ${{env.DoRegressionTests}} ${{env.build_number}}"
       - name: trigger pipeline
         run:  |
-          curl -X POST http://153.78.126.84:8080/job/CFC-Build-Deployment/job/Dev/job/1/buildWithParameters --user jenkinsuser:11fc28771d771bcc22a15cb8014d07d677 --data token=github_workflow --data pass_param="yes" --data name="foo"
+          curl -X POST https://cfcjenkins/job/CFC-Build-Deployment/job/Dev/job/1/buildWithParameters --user jenkinsuser:11fc28771d771bcc22a15cb8014d07d677 --data token=github_workflow --data pass_param="yes" --data name="foo"

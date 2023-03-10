@@ -26,4 +26,4 @@ jobs:
       steps:
       - name: Trigger Jenkins job
         run: |
-          curl -X POST https://cfcjenkinshyd.swenglabs.ncr.com/job/CFC-Build-Deployment/job/Dev/job/1/buildWithParameters --user "jenkinsuser:11fc28771d771bcc22a15cb8014d07d677" --data-urlencode "version=${{ env.build_number }}" --data-urlencode "sanityTest=${{ env.DoSanityTests }}"  --data-urlencode "regressionTest=${{ env.DoRegressionTests }}"
+          curl -X POST https://153.78.126.84/job/CFC-Build-Deployment/job/Dev/job/1/buildWithParameters --user "jenkinsuser:11fc28771d771bcc22a15cb8014d07d677" --data-urlencode "version=${{ env.build_number }}" --data-urlencode "sanityTest=${{ env.DoSanityTests }}"  --data-urlencode "regressionTest=${{ env.DoRegressionTests }}"

@@ -1,0 +1,20 @@
+name: Running Curl Command
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'new build version'
+        required: false
+        default: '99.99.99.99'
+      
+   
+env:
+  build_number: '99.9.9.9999'
+  
+jobs:
+  job1:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Trigger Jenkins job
+        run: |
+          curl https://api.coinbase.com/v2/prices/BTC-USD/buy
